@@ -93,8 +93,8 @@ const Cart = () => {
 		onClear();
 	};
 
-	const onProductClear = (name) => {
-		dispatch(clearProduct(name));
+	const onProductClear = (id) => {
+		dispatch(clearProduct(id));
 	};
 
 	return (
@@ -155,7 +155,7 @@ const Cart = () => {
 														} ₪`}
 													</TableCell>
 													<TableCell>
-														<IconButton size="small" onClick={() => onProductClear(cartItem.product.name)}>
+														<IconButton size="small" onClick={() => onProductClear(cartItem.product._id)}>
 															<Tooltip title="remove">
 																<HighlightOffOutlinedIcon />
 															</Tooltip>
