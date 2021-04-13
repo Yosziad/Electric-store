@@ -6,7 +6,7 @@ const logger = new Logger('app');
 const SERVICE_EMAIL_ADDRESS = 'kingmonkey409@gmail.com';
 const ADMIN_EMAIL_ADDRESS = 'ziadeyusef@gmail.com';
 const EMAIL_SERVICE = 'GMAIL';
-const SERVICE_EMAIL_PASSWORD = 'Yos112233';
+const SERVICE_EMAIL_PASSWORD = 'Test112233?';
 
 const transporter = nodemailer.createTransport({
   service: EMAIL_SERVICE,
