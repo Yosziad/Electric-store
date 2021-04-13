@@ -46,6 +46,6 @@ app.use((_req, res) => {
   logger.error('not found');
 });
 
-app.listen(8080, () => {
-  logger.info('APP LAUNCHED IN PORT 8080');
+app.listen(process.env.PORT || 8080, () => {
+  logger.info(`APP LAUNCHED IN PORT${process.env.PORT || 8080}`);
 });
