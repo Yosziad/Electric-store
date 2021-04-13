@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import {
@@ -27,45 +27,57 @@ const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 // Configure store
 const { store, persistor } = configureStore();
 
-const App = () => (
-	<Provider store={store}>
-		<PersistGate loading={null} persistor={persistor}>
-			<ThemeProvider theme={CustomTheme}>
-				<StylesProvider jss={jss}>
-					<BrowserRouter>
-						<Switch>
-							<Route exact path="/">
-								<Home />
-							</Route>
-							<Route exact path="/login">
-								<Login />
-							</Route>
-							<Route exact path="/signup">
-								<Signup />
-							</Route>
-							<Route path="/categories/:category">
-								<Categories />
-							</Route>
-							<Route exact path="/contact">
-								<Contact />
-							</Route>
-							<Route exact path="/products/:productId">
-								<Product />
-							</Route>
-							<Route exact path="/cart">
-								<Cart />
-							</Route>
-							<Route exact path="/orders">
-								{doesCookieExist('token')
-									? <Orders />
-									: <Redirect to="/login" />}
-							</Route>
-						</Switch>
-					</BrowserRouter>
-				</StylesProvider>
-			</ThemeProvider>
-		</PersistGate>
-	</Provider>
-);
+const App = () => {
+	const [token, setToken] = useState(false);
+	useEffect(() => {
+		if (doesCookieExist('token')) {
+			setToken(true);
+		} else {
+			setToken(false);
+		}
+	}, []);
+	return (
+		<Provider store={store}>
+			<PersistGate loading={null} persistor={persistor}>
+				<ThemeProvider theme={CustomTheme}>
+					<StylesProvider jss={jss}>
+						<BrowserRouter>
+							<Switch>
+								<Route exact path="/">
+									<Home />
+								</Route>
+								<Route exact path="/login">
+									<Login />
+								</Route>
+								<Route exact path="/signup">
+									<Signup />
+								</Route>
+								<Route path="/categories/:category">
+									<Categories />
+								</Route>
+								<Route exact path="/contact">
+									<Contact />
+								</Route>
+								<Route exact path="/products/:productId">
+									<Product />
+								</Route>
+								<Route exact path="/cart">
+									{token
+										? <Cart />
+										: <Redirect to="/login" />}
+								</Route>
+								<Route exact path="/orders">
+									{token
+										? <Orders />
+										: <Redirect to="/login" />}
+								</Route>
+							</Switch>
+						</BrowserRouter>
+					</StylesProvider>
+				</ThemeProvider>
+			</PersistGate>
+		</Provider>
+	);
+};
 
 export default App;

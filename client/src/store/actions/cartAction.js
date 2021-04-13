@@ -10,10 +10,10 @@ const clearCartAction = () => ({
 	type: 'CLEAR_CART',
 });
 
-const clearProduct = (name) => ({
+const clearProduct = (id) => ({
 	type: 'CLEAR_PRODUCT',
 	payload: {
-		name,
+		id,
 	},
 });
 

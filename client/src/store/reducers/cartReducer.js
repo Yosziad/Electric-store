@@ -8,7 +8,7 @@ const cartReducer = (state = defaultState, action) => {
 	case 'ADD_TO_CART':
 		if (action.payload) {
 			itemFound = state.cartItems.find((item) => (
-				item.product.name === action.payload[0].product.name));
+				item.product._id === action.payload[0].product._id));
 			if (itemFound) {
 				const newQuantity = itemFound.quantity + action.payload[0].quantity;
 				const newProduct = action.payload[0].product;
@@ -16,7 +16,7 @@ const cartReducer = (state = defaultState, action) => {
 				return {
 					...state,
 					cartItems: state.cartItems.filter((item) => (
-						item.product.name !== itemFound.product.name)).concat(newCartItem),
+						item.product._id !== itemFound.product._id)).concat(newCartItem),
 				};
 			}
 			return {
@@ -34,7 +34,7 @@ const cartReducer = (state = defaultState, action) => {
 	case 'CLEAR_PRODUCT':
 		return {
 			...state,
-			cartItems: state.cartItems.filter((item) => item.product.name !== action.payload.name),
+			cartItems: state.cartItems.filter((item) => item.product._id !== action.payload.id),
 		};
 	default:
 		return state;

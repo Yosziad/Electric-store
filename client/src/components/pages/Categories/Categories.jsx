@@ -60,11 +60,13 @@ const Categories = () => {
 		const getProducts = async () => {
 			setLoading(true);
 			const newProducts = await API.getProductByCategory(title.category, page);
-			if (newProducts.length === 0) {
-				setHasMore(false);
+			if (!newProducts.isAxiosError) {
+				if (newProducts.length === 0) {
+					setHasMore(false);
+				}
+				setProducts((prev) => [...prev, ...newProducts]);
+				setLoading(false);
 			}
-			setProducts((prev) => [...prev, ...newProducts]);
-			setLoading(false);
 		};
 		if (title.category && hasMore) {
 			getProducts();
