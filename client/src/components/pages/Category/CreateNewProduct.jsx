@@ -15,9 +15,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import createProduct from '../../../utils/api/product/product';
 
-const successMsg = (msg) => toast(msg);
-const errorMsg = () => toast('Error!');
-
 const CreateNewProduct = () => {
 	const { category } = useParams();
 	const [isCreateItemOpen, setIsCreateItemOpen] = useState(false);
@@ -55,14 +52,13 @@ const CreateNewProduct = () => {
 	}, [onClear]);
 
 	const onAdd = useCallback(async () => {
-		let response;
 		try {
-			response = await createProduct(
+			await createProduct(
 				name, price, category, quantity, pictureUrl, description,
 			);
-			successMsg(response);
+			toast('המוצר נוצר בהצלחה');
 		} catch (err) {
-			errorMsg();
+			toast.error('שגיאה בעת יצירת המוצר');
 		}
 		handleClose();
 	}, [handleClose, name, price, category, quantity, pictureUrl, description]);
