@@ -10,13 +10,15 @@ import Button from '@material-ui/core/Button';
 import signup from '../../../utils/api/user/user';
 import './Signup.scss';
 
+const userNameValidationRegEx = /^([a-z]|[0-9]|-|_)+$/;
+
 const Signup = () => {
 	const [username, setUsername] = useState('');
 	const [usernameError, setUsernameError] = useState('');
 	const [password, setPassword] = useState('');
 	const [passwordError, setPasswordError] = useState('');
-	const [passwordAgain, setPasswordAgain] = useState('');
-	const [passwordAgainError, setPasswordAgainError] = useState('');
+	const [passwordConfirm, setPasswordConfirm] = useState('');
+	const [passwordConfirmError, setPasswordConfirmError] = useState('');
 	const [firstname, setFirstname] = useState('');
 	const [firstnameError, setFirstnameError] = useState('');
 	const [lastname, setLastname] = useState('');
@@ -29,7 +31,7 @@ const Signup = () => {
 	}, []);
 	const onPasswordChange = useCallback((e) => setPassword(e.target.value), []);
 	const onPasswordChangeAgain = useCallback(
-		(e) => setPasswordAgain(e.target.value),
+		(e) => setPasswordConfirm(e.target.value),
 		[],
 	);
 	const onFirstnameChange = useCallback(
@@ -39,53 +41,52 @@ const Signup = () => {
 	const onLastnameChange = useCallback((e) => setLastname(e.target.value), []);
 
 	const validate = useCallback(() => {
-		let isError = false;
-		const userNameValidationRegEx = /^([a-z]|[0-9]|-|_)+$/;
+		let isValid = true;
 		const isUserNameValid = userNameValidationRegEx.test(username);
 		if (!isUserNameValid) {
 			setUsernameError(
 				'שם המשתמש יכול להכיל אך ורק אותיות קטנות באנגלית, מספרים,- או _',
 			);
-			isError = true;
-			return isError;
+			isValid = false;
+		} else {
+			setUsernameError('');
 		}
-		setUsernameError('');
 		if (!password) {
 			setPasswordError('שדה הסיסמא ריק! עליך למלא את כל השדות');
-			isError = true;
-			return isError;
+			isValid = false;
+		} else {
+			setPasswordError('');
 		}
-		setPasswordError('');
 		if (password.length < 8) {
 			setPasswordError('אורך הסיסמא חייב להיות יותר מ-8 תווים');
-			isError = true;
-			return isError;
+			isValid = false;
+		} else {
+			setPasswordError('');
 		}
-		setPasswordError('');
-		if (passwordAgain !== password) {
-			setPasswordAgainError('הסיסמא הראשונה והשניה אינן תואמות');
-			isError = true;
-			return isError;
+		if (passwordConfirm !== password) {
+			setPasswordConfirmError('הסיסמא הראשונה והשניה אינן תואמות');
+			isValid = false;
+		} else {
+			setPasswordConfirmError('');
 		}
-		setPasswordAgainError('');
 		if (!firstname) {
 			setFirstnameError('שדה שם הפרטי ריק! עליך למלא את כל השדות');
-			isError = true;
-			return isError;
+			isValid = false;
+		} else {
+			setFirstnameError('');
 		}
-		setFirstnameError('');
 		if (!lastname) {
 			setLastnameError('שדה שם המשפחה ריק! עליך למלא את כל השדות');
-			isError = true;
-			return isError;
+			isValid = false;
+		} else {
+			setLastnameError('');
 		}
-		setLastnameError('');
-		return isError;
-	}, [firstname, lastname, password, passwordAgain, username]);
+		return isValid;
+	}, [firstname, lastname, password, passwordConfirm, username]);
 
 	const onSubmit = useCallback(() => {
-		const err = validate();
-		if (!err) {
+		const isValid = validate();
+		if (isValid) {
 			signup(username, password, firstname, lastname);
 			history.push('/');
 		}
@@ -148,12 +149,12 @@ const Signup = () => {
 							id="input-with-icon-textfield"
 							label="אשר סיסמא"
 							type="password"
-							value={passwordAgain}
+							value={passwordConfirm}
 							onChange={onPasswordChangeAgain}
 							className="text-field"
-							error={passwordAgainError.length > 0}
+							error={passwordConfirmError.length > 0}
 							helperText={
-								passwordAgainError.length > 0 ? passwordAgainError : ' '
+								passwordConfirmError.length > 0 ? passwordConfirmError : ' '
 							}
 							InputProps={{
 								startAdornment: (
