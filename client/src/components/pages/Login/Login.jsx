@@ -68,10 +68,6 @@ const Login = () => {
 		}
 	}, [dispatch, history, password, username]);
 
-	const onHome = useCallback(() => {
-		history.push('/');
-	}, [history]);
-
 	return (
 		<>
 			<CssBaseline />
@@ -85,9 +81,9 @@ const Login = () => {
 			>
 				<Grid item className="login-container">
 					<Grid item className="image-container" xs={12}>
-						<Button onClick={onHome}>
+						<Link to="/">
 							<img className="image-logo" src={loginImg} alt="login" />
-						</Button>
+						</Link>
 					</Grid>
 					<Grid item xs={12} className="login-title">
 						<h1>ברוכים הבאים!</h1>
