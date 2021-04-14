@@ -3,9 +3,9 @@ import { useHistory } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import WelcomeCarousel from '../pages/Carousel/Carousel';
-import Categorybtn from '../CategoryBtn/CategoryBtn';
-import '../pages/Home/Home.scss';
+import WelcomeCarousel from '../../pages/Carousel/Carousel';
+import Categorybtn from '../../common/CategoryBtn/CategoryBtn';
+import '../../pages/Home/Home.scss';
 
 const ItemBanner = () => {
 	const history = useHistory();

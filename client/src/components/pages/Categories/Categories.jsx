@@ -14,10 +14,10 @@ import Loader from 'react-loaders';
 import { FaPlus, FaUndo, FaSave } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Header from '../../partials/Header';
-import ProductCard from '../../ProductCard/ProductCard';
+import Header from '../../partials/Header/Header';
+import ProductCard from '../../common/ProductCard/ProductCard';
 import CategoryTitle from '../../partials/CategoryTitle/CategoryTitle';
-import API from '../../../utils/api';
+import createProduct, { getProductByCategory } from '../../../utils/api/product/product';
 import './Categories.scss';
 
 const Categories = () => {
@@ -59,7 +59,7 @@ const Categories = () => {
 	useEffect(() => {
 		const getProducts = async () => {
 			setLoading(true);
-			const newProducts = await API.getProductByCategory(title.category, page);
+			const newProducts = await getProductByCategory(title.category, page);
 			if (!newProducts.isAxiosError) {
 				if (newProducts.length === 0) {
 					setHasMore(false);
@@ -100,7 +100,7 @@ const Categories = () => {
 	const onAdd = useCallback(async () => {
 		let response;
 		try {
-			response = await API.createProduct(
+			response = await createProduct(
 				name, price, title.category, quantity, pictureUrl, description,
 			);
 		} catch (err) {

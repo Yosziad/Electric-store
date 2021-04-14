@@ -23,11 +23,12 @@ import { useHistory } from 'react-router-dom';
 import './Cart.scss';
 
 import HighlightOffOutlinedIcon from '@material-ui/icons/HighlightOffOutlined';
-import SearchLocationInput from '../../partials/SearchLocationInput';
+import SearchLocationInput from '../../partials/SearchLocationInput/SearchLocationInput';
 import { clearCartAction, clearProduct } from '../../../store/actions/cartAction';
 import useWindowDimensions from '../../../assests/hooks/useWindowDimensions';
-import Header from '../../partials/Header';
-import API from '../../../utils/api';
+import Header from '../../partials/Header/Header';
+import createOrder from '../../../utils/api/order/order';
+import { quantityUpdate }  from '../../../utils/api/product/product';
 
 const DELIVERY_COST = 15;
 
@@ -65,7 +66,7 @@ const Cart = () => {
 		setSum(totalSum);
 	}, [cartItems]);
 
-	const quantityUpdate = cartItems.map((cartItem) => {
+	const itemQuantityUpdate = cartItems.map((cartItem) => {
 		const newQuantity = cartItem.product.quantity - cartItem.quantity;
 		return { id: cartItem.product._id, quantity: newQuantity };
 	});
@@ -87,8 +88,8 @@ const Cart = () => {
 		} else {
 			userId = user._id;
 		}
-		API.createOrder(userId, address, cartItems);
-		quantityUpdate.forEach((item) => API.quantityUpdate(item));
+		createOrder(userId, address, cartItems);
+		itemQuantityUpdate.forEach((item) => quantityUpdate(item));
 		success();
 		onClear();
 	};

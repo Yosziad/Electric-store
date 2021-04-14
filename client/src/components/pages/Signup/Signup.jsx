@@ -7,7 +7,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import PersonIcon from '@material-ui/icons/Person';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import Button from '@material-ui/core/Button';
-import API from '../../../utils/api';
+import signup from '../../../utils/api/user/user';
 import './Signup.scss';
 
 const Signup = () => {
@@ -86,7 +86,7 @@ const Signup = () => {
 	const onSubmit = useCallback(() => {
 		const err = validate();
 		if (!err) {
-			API.signup(username, password, firstname, lastname);
+			signup(username, password, firstname, lastname);
 			history.push('/');
 		}
 	}, [firstname, history, lastname, password, username, validate]);

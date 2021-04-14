@@ -12,8 +12,8 @@ import {
 	TableHead,
 	Paper,
 } from '@material-ui/core';
-import Header from '../../partials/Header';
-import API from '../../../utils/api';
+import Header from '../../partials/Header/Header';
+import getUserOrders from '../../../utils/api/user/user';
 import './Orders.scss';
 
 const sumReducer = (sum, orderedProduct) => (sum + (get(orderedProduct, 'quantity', 0) * get(orderedProduct, 'product.price', 0)));
@@ -33,7 +33,7 @@ const Orders = () => {
 		} else {
 			userId = user._id;
 		}
-		const foundOrders = await API.getUserOrders(userId);
+		const foundOrders = await getUserOrders(userId);
 		setOrders(foundOrders);
 	}, [user._id, user.source, user.sourceId]);
 
