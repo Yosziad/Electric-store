@@ -1,6 +1,11 @@
-/* eslint-disable no-underscore-dangle */
-import React, { useEffect, useState, useCallback } from 'react';
+import React, {
+	useEffect,
+	useState,
+	useCallback,
+	useMemo,
+} from 'react';
 import get from 'lodash/get';
+import PropTypes from 'prop-types';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
@@ -28,9 +33,27 @@ import { clearCartAction, clearProduct } from '../../../store/actions/cartAction
 import useWindowDimensions from '../../../assests/hooks/useWindowDimensions';
 import Header from '../../partials/Header/Header';
 import createOrder from '../../../utils/api/order/order';
-import { quantityUpdate }  from '../../../utils/api/product/product';
+import { quantityUpdate } from '../../../utils/api/product/product';
 
 const DELIVERY_COST = 15;
+
+const RemoveProductBtn = ({ onClick, productId }) => {
+	const removeItem = useCallback(() => {
+		onClick(productId);
+	}, [onClick, productId]);
+	return (
+		<IconButton size="small" onClick={removeItem}>
+			<Tooltip title="remove">
+				<HighlightOffOutlinedIcon />
+			</Tooltip>
+		</IconButton>
+	);
+};
+
+RemoveProductBtn.propTypes = {
+	onClick: PropTypes.func.isRequired,
+	productId: PropTypes.string.isRequired,
+};
 
 const Cart = () => {
 	const [sum, setSum] = useState(0);
@@ -66,37 +89,39 @@ const Cart = () => {
 		setSum(totalSum);
 	}, [cartItems]);
 
-	const itemQuantityUpdate = cartItems.map((cartItem) => {
+	const itemQuantityUpdate = useMemo(() => cartItems.map((cartItem) => {
 		const newQuantity = cartItem.product.quantity - cartItem.quantity;
 		return { id: cartItem.product._id, quantity: newQuantity };
-	});
-
-	const success = () => toast('ההזמנה בוצעה בהצלחה');
+	}), [cartItems]);
 
 	const onHome = useCallback(() => {
 		history.push('/');
 	}, [history]);
 
-	const onClear = () => {
+	const onClear = useCallback(() => {
 		dispatch(clearCartAction());
-	};
+	}, [dispatch]);
 
-	const onSubmit = () => {
+	const onSubmit = useCallback(async () => {
 		let userId;
 		if (user.source === 'Google' || user.source === 'Facebook') {
 			userId = user.sourceId;
 		} else {
 			userId = user._id;
 		}
-		createOrder(userId, address, cartItems);
-		itemQuantityUpdate.forEach((item) => quantityUpdate(item));
-		success();
-		onClear();
-	};
+		try {
+			await createOrder(userId, address, cartItems);
+			itemQuantityUpdate.forEach((item) => quantityUpdate(item));
+			toast('ההזמנה בוצעה בהצלחה');
+			onClear();
+		} catch (err) {
+			toast.error('שגיאה בעת ביצוע ההזמנה');
+		}
+	}, [address, cartItems, itemQuantityUpdate, onClear, user._id, user.source, user.sourceId]);
 
-	const onProductClear = (id) => {
+	const onProductClear = useCallback((id) => {
 		dispatch(clearProduct(id));
-	};
+	}, [dispatch]);
 
 	return (
 		<div>
@@ -156,11 +181,10 @@ const Cart = () => {
 														} ₪`}
 													</TableCell>
 													<TableCell>
-														<IconButton size="small" onClick={() => onProductClear(cartItem.product._id)}>
-															<Tooltip title="remove">
-																<HighlightOffOutlinedIcon />
-															</Tooltip>
-														</IconButton>
+														<RemoveProductBtn
+															onClick={onProductClear}
+															productId={cartItem.product._id}
+														/>
 													</TableCell>
 												</TableRow>
 											))}

@@ -1,200 +1,93 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, {
+	useState,
+	useEffect,
+	useCallback,
+} from 'react';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import { useHistory, Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router';
 import get from 'lodash/get';
 import {
 	Typography,
 	CardMedia,
-	Popover,
-	Fade,
-	IconButton,
-	TextField,
-	Dialog,
-	DialogTitle,
-	DialogContent,
-	InputAdornment,
-	DialogActions,
 } from '@material-ui/core';
-import { AiOutlineClose } from 'react-icons/ai';
 import { IoAddCircleSharp, IoRemoveCircleSharp } from 'react-icons/io5';
-import { FaSave } from 'react-icons/fa';
-import { MdModeEdit, MdDelete, MdAddShoppingCart } from 'react-icons/md';
+import { MdDelete, MdAddShoppingCart, MdModeEdit } from 'react-icons/md';
 import { ToastContainer, toast } from 'react-toastify';
-import { getProductById, updateProduct, deleteProduct } from '../../../utils/api/product/product';
-import doesCookieExist from '../../../utils/doesCookieExist';
+import { getProductById, deleteProduct } from '../../../utils/api/product/product';
 import './Product.scss';
-
 import cartAction from '../../../store/actions/cartAction';
 import Header from '../../partials/Header/Header';
-
-const loginImg = '/img/logo.png';
+import EditProductModal from './EditProductModal';
 
 const Product = () => {
 	const [product, setProduct] = useState({});
 	const [quantity, setQuantity] = useState(0);
-	const [isSigned, setIsSigned] = useState(false);
-	const [openEdit, setOpenEdit] = useState(false);
+	const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
+
+	const history = useHistory();
 
 	const user = useSelector(
 		(state) => get(state, 'currentUserReducer.user', {}),
 		shallowEqual,
 	);
 
-	const [name, setName] = useState('');
-	const onNameChange = useCallback((e) => setName(e.target.value), []);
-	const [price, setPrice] = useState('');
-	const onPriceChange = useCallback((e) => setPrice(+e.target.value), []);
-	const [productQuantity, setProductQuantity] = useState('');
-	const onProductQuantityChange = useCallback((e) => setProductQuantity(+e.target.value), []);
-	const [pictureUrl, setPictureUrl] = useState('');
-	const onPictureUrlChange = useCallback((e) => setPictureUrl(e.target.value), []);
-	const [description, setDescription] = useState('');
-	const onDescriptionChange = useCallback((e) => setDescription(e.target.value), []);
-
 	const dispatch = useDispatch();
-
 	const { productId } = useParams();
 
-	const history = useHistory();
-
 	useEffect(() => {
-		const getProducts = async () => {
-			setProduct(await getProductById(productId));
+		const getProduct = async () => {
+			try	{
+				const resProduct = await getProductById(productId);
+				setProduct(resProduct);
+			} catch (err) {
+				toast.error('שגיאה בעת בקשת נתונים');
+			} finally {
+				setIsLoading(false);
+			}
 		};
-
 		if (productId) {
-			getProducts();
-			setName(product.name);
-			setPrice(product.price);
-			setProductQuantity(product.quantity);
-			setPictureUrl(product.pictureUrl);
-			setDescription(product.description);
+			getProduct();
 		}
-	}, [product.description, product.name, product.pictureUrl,
-		product.price, product.quantity, productId]);
-
-	const handleClose = () => {
-		setIsSigned(false);
-	};
-
-	const onHome = useCallback(() => {
-		history.push('/');
-	}, [history]);
-
-	const onLogin = useCallback(() => {
-		history.push('/login');
-	}, [history]);
-
-	const open = isSigned;
-	const id = open ? 'simple-popover' : undefined;
-
-	const notSigned = (
-		<Popover
-			id={id}
-			className="product-popover"
-			open={open}
-			anchorEl={isSigned}
-			onClose={handleClose}
-			anchorReference="anchorPosition"
-			anchorPosition={{ top: 200, left: 700 }}
-		>
-			<Fade in={open}>
-				<Grid item className="popover-container">
-					<IconButton
-						onClick={handleClose}
-						className="close-btn"
-					>
-						<AiOutlineClose />
-					</IconButton>
-					<Button onClick={onHome} className="home-btn">
-						<img className="image-logo" src={loginImg} alt="login" />
-					</Button>
-					<Typography variant="h5" className="text">
-						עליך להתחבר לאתר על מנת לבצע הזמנה
-					</Typography>
-					<Button
-						size="small"
-						className="login-btn"
-						variant="contained"
-						onClick={onLogin}
-					>
-						התחבר
-					</Button>
-					<h5>
-						אין לך משתמש
-						?
-						<Link to="../signup">הרשם כאן</Link>
-					</h5>
-				</Grid>
-			</Fade>
-		</Popover>
-	);
+	}, [productId]);
 
 	const onQuantityAdd = useCallback(() => {
-		let val = quantity;
 		if (quantity < product.quantity) {
-			val = quantity + 1;
-			setQuantity(val);
-		} else {
-			setQuantity(product.quantity);
+			setQuantity(quantity + 1);
 		}
 	}, [product.quantity, quantity]);
 
 	const onQuantitySubtract = useCallback(() => {
-		let val = quantity;
 		if (quantity > 0) {
-			val = quantity - 1;
+			setQuantity(quantity - 1);
 		}
-		setQuantity(val);
 	}, [quantity]);
 
 	const onAddToCart = useCallback(() => {
-		if (doesCookieExist('token')) {
-			dispatch(cartAction(product, quantity));
-		} else {
-			setIsSigned(true);
-		}
+		dispatch(cartAction(product, quantity));
 	}, [dispatch, product, quantity]);
 
-	const success = (msg) => toast(msg);
-	const updateError = () => toast('Error!');
-
-	const handleClickOpen = () => {
-		setOpenEdit(true);
-	};
-
-	const handleEditClose = () => {
-		setOpenEdit(false);
-	};
-
-	const onAdd = useCallback(async () => {
-		let response;
-		try {
-			response = await updateProduct(
-				productId, {
-					name, price, productQuantity, pictureUrl, description,
-				},
-			);
-		} catch (err) {
-			updateError();
-		}
-		success(response.message);
-		handleEditClose();
-	}, [description, name, pictureUrl, price, productId, productQuantity]);
-
-	const deleteProduct = useCallback(async () => {
+	const onDeleteProduct = useCallback(async () => {
 		let response;
 		try {
 			response = await deleteProduct(productId);
 		} catch (err) {
-			updateError();
+			toast.error('שגיאה בעת מחיקת המוצר');
 		}
-		success(response.message);
+		toast(response.message);
 		history.goBack();
 	}, [history, productId]);
+
+	const handleClickOpen = useCallback(() => {
+		setIsEditModalOpen(true);
+	}, []);
+
+	const handleEditClose = useCallback(() => {
+		setIsEditModalOpen(false);
+	}, []);
 
 	return (
 		<div className="product-page">
@@ -204,82 +97,25 @@ const Product = () => {
 				direction="row"
 				alignItems="center"
 				justify="center"
-				className={open ? 'blurred' : null}
 			>
 				<Grid item md={6} className="product-container">
-					{user.role === 'Admin'
-						? (
-							<Button className="edit-btn" title="ערוך מוצר" onClick={handleClickOpen}>
-								<MdModeEdit />
-							</Button>
-						)
-						: null}
-					<Dialog open={openEdit} onClose={handleEditClose} fullWidth maxWidth="sm" aria-labelledby="form-dialog-title">
-						<DialogTitle id="form-dialog-title" className="popover-title">הוספת מוצר חדש</DialogTitle>
-						<DialogContent className="dialog-container">
-							<Grid container className="text-field-container">
-								<TextField
-									id="standard-helperText"
-									label="שם"
-									className="dialog-txt-field"
-									value={name}
-									onChange={onNameChange}
-									variant="filled"
-								/>
-								<TextField
-									id="standard-helperText"
-									label="כתובת תמונה(url)"
-									className="dialog-txt-field"
-									value={pictureUrl}
-									onChange={onPictureUrlChange}
-									variant="filled"
-								/>
-								<TextField
-									id="standard-helperText"
-									label="מחיר"
-									className="dialog-txt-field"
-									value={price}
-									onChange={onPriceChange}
-									variant="filled"
-									InputProps={{
-										endAdornment: <InputAdornment className="input-text" position="end">₪</InputAdornment>,
-									}}
-								/>
-								<TextField
-									id="standard-helperText"
-									label="כמות"
-									className="dialog-txt-field"
-									value={productQuantity}
-									onChange={onProductQuantityChange}
-									variant="filled"
-									type="number"
-								/>
-							</Grid>
-							<TextField
-								id="standard-helperText"
-								label="תאור"
-								className="dialog-txt-field"
-								value={description}
-								onChange={onDescriptionChange}
-								variant="filled"
-								multiline
-								rows={4}
-							/>
-						</DialogContent>
-						<DialogActions className="btn-container">
-							<Button onClick={onAdd} variant="contained" color="primary" className="btn add">
-								עדכן
-								<FaSave />
-							</Button>
-						</DialogActions>
-					</Dialog>
-					<ToastContainer />
+					{user.role === 'Admin' && (
+						<Button className="edit-btn" title="ערוך מוצר" onClick={handleClickOpen}>
+							<MdModeEdit />
+						</Button>
+					)}
+					{!isLoading && (
+						<EditProductModal
+							product={product}
+							onClose={handleEditClose}
+							isOpen={isEditModalOpen}
+						/>
+					)}
 					<Typography variant="h1" className="title" gutterBottom>
 						{product.name}
 					</Typography>
 					<Typography variant="h5" className="price">
-						{product.price}
-						.00 ₪
+						{`${get(product, 'price', 0).toFixed(2)}₪`}
 					</Typography>
 					<Typography variant="subtitle1" className="description">
 						{product.description}
@@ -319,21 +155,20 @@ const Product = () => {
 						<MdAddShoppingCart className="icon" />
 					</Button>
 					{user.role === 'Admin'
-						? (
+						&& (
 							<Button
 								variant="contained"
 								className="delete-btn"
 								color="secondary"
-								onClick={deleteProduct}
+								onClick={onDeleteProduct}
 							>
 								מחק מוצר
 								<MdDelete className="icon" />
 							</Button>
-						)
-						: null}
+						)}
 				</Grid>
 			</Grid>
-			{notSigned}
+			<ToastContainer />
 		</div>
 	);
 };

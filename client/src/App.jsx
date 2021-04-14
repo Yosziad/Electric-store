@@ -15,7 +15,7 @@ import configureStore from './store/configureStore';
 import Signup from './components/pages/Signup/Signup';
 import Login from './components/pages/Login/Login';
 import Home from './components/pages/Home/Home';
-import Categories from './components/pages/Categories/Categories';
+import Category from './components/pages/Category/Category';
 import Contact from './components/pages/Contact/Contact';
 import Product from './components/pages/Product/Product';
 import Cart from './components/pages/Cart/Cart';
@@ -53,7 +53,7 @@ const App = () => {
 									<Signup />
 								</Route>
 								<Route path="/categories/:category">
-									<Categories />
+									<Category />
 								</Route>
 								<Route exact path="/contact">
 									<Contact />
