@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {
 	Card, CardActionArea, CardActions, CardContent, CardMedia, Button, Typography,
 } from '@material-ui/core';
-import API from '../../utils/api';
+import { viewsUpdate } from '../../../utils/api/product/product';
 import './ProductCard.scss';
 
 const ProductCard = ({
@@ -13,7 +13,7 @@ const ProductCard = ({
 	const history = useHistory();
 
 	const onProduct = () => {
-		API.viewsUpdate(productId, views);
+		viewsUpdate(productId, views);
 		history.push(`/products/${productId}`);
 	};
 

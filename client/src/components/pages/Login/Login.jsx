@@ -9,10 +9,10 @@ import { Person, LockOpen } from '@material-ui/icons';
 import { FaGoogle } from 'react-icons/fa';
 import currentUserAction from '../../../store/actions/currentUserAction';
 import doesCookieExist from '../../../utils/doesCookieExist';
-import API from '../../../utils/api';
+import { loginWithThirdPartyApp, login } from '../../../utils/api/user/user';
 import './Login.scss';
 
-import loginImg from '../../../assests/images/logo.jpg';
+const loginImg = '/img/logo.png';
 
 const Login = () => {
 	const [username, setUsername] = useState('');
@@ -29,7 +29,7 @@ const Login = () => {
 	const history = useHistory();
 
 	const loginWithThirdParty =	useCallback(async (userId, userDetails, source) => {
-		const user = await API.loginWithThirdPartyApp(userId, source);
+		const user = await loginWithThirdPartyApp(userId, source);
 		dispatch(currentUserAction({
 			...userDetails,
 			source: user.source,
@@ -58,7 +58,7 @@ const Login = () => {
 
 	const onSubmit = useCallback(async () => {
 		setError('');
-		const currentUser = await API.login(username, password);
+		const currentUser = await login(username, password);
 		dispatch(currentUserAction(currentUser));
 		const token = doesCookieExist('token');
 		if (token) {

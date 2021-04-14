@@ -8,8 +8,8 @@ import Container from '@material-ui/core/Container';
 import Fab from '@material-ui/core/Fab';
 import { AiOutlineRight, AiOutlineLeft } from 'react-icons/ai';
 import ProductCard from '../ProductCard/ProductCard';
-import API from '../../utils/api';
-import useWindowDimensions from '../../assests/hooks/useWindowDimensions';
+import { getProductByViews } from '../../../utils/api/product/product';
+import useWindowDimensions from '../../../assests/hooks/useWindowDimensions';
 import './MostViewedItems.scss';
 
 const MostViewedItems = ({ title }) => {
@@ -17,7 +17,7 @@ const MostViewedItems = ({ title }) => {
 
 	useEffect(() => {
 		const getProducts = async () => {
-			setProducts(await API.getProductByViews());
+			setProducts(await getProductByViews());
 		};
 		getProducts();
 	}, []);

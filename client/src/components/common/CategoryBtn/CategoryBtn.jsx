@@ -1,9 +1,7 @@
 import React, { useCallback } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { useHistory } from 'react-router-dom';
-import { Button } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
+import { Button, Typography, Divider } from '@material-ui/core';
 import TvIcon from '@material-ui/icons/Tv';
 import PhoneAndroidIcon from '@material-ui/icons/PhoneAndroid';
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';

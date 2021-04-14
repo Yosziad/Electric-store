@@ -2,7 +2,7 @@ import React from 'react';
 import { Typography, Paper } from '@material-ui/core';
 import { FaPhone } from 'react-icons/fa';
 import { GrMail } from 'react-icons/gr';
-import Header from '../../partials/Header';
+import Header from '../../partials/Header/Header';
 import './Contact.scss';
 
 const Contact = () => (

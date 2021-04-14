@@ -23,14 +23,14 @@ import { IoAddCircleSharp, IoRemoveCircleSharp } from 'react-icons/io5';
 import { FaSave } from 'react-icons/fa';
 import { MdModeEdit, MdDelete, MdAddShoppingCart } from 'react-icons/md';
 import { ToastContainer, toast } from 'react-toastify';
-import API from '../../../utils/api';
+import { getProductById, updateProduct, deleteProduct } from '../../../utils/api/product/product';
 import doesCookieExist from '../../../utils/doesCookieExist';
 import './Product.scss';
 
-import loginImg from '../../../assests/images/logo.jpg';
-
 import cartAction from '../../../store/actions/cartAction';
-import Header from '../../partials/Header';
+import Header from '../../partials/Header/Header';
+
+const loginImg = '/img/logo.png';
 
 const Product = () => {
 	const [product, setProduct] = useState({});
@@ -62,7 +62,7 @@ const Product = () => {
 
 	useEffect(() => {
 		const getProducts = async () => {
-			setProduct(await API.getProductById(productId));
+			setProduct(await getProductById(productId));
 		};
 
 		if (productId) {
@@ -173,7 +173,7 @@ const Product = () => {
 	const onAdd = useCallback(async () => {
 		let response;
 		try {
-			response = await API.updateProduct(
+			response = await updateProduct(
 				productId, {
 					name, price, productQuantity, pictureUrl, description,
 				},
@@ -188,7 +188,7 @@ const Product = () => {
 	const deleteProduct = useCallback(async () => {
 		let response;
 		try {
-			response = await API.deleteProduct(productId);
+			response = await deleteProduct(productId);
 		} catch (err) {
 			updateError();
 		}
