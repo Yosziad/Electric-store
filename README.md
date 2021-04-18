@@ -1,5 +1,10 @@
 # Electrical shop
 A responsive website developed using multiple technologies - React, Node.js, MongoDB, Redux, and Material-UI.
+<h1 align="center">
+  <br>
+  <img src="https://github.com/Yosziad/Electric-store/blob/readme/client/public/logo.png" alt="Foco" width="160">
+</h1>
+
 
 ## Table of contents
 * [General info](#general-info)
