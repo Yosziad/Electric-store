@@ -5,6 +5,8 @@ A responsive website developed using multiple technologies - React, Node.js, Mon
   <img src="https://github.com/Yosziad/Electric-store/blob/readme/client/public/logo.png" alt="Foco" width="160">
 </h1>
 
+visit the website at: https://electrical-store.herokuapp.com/
+
 
 ## Table of contents
 * [General info](#general-info)
