@@ -111,7 +111,7 @@ const Product = () => {
 							isOpen={isEditModalOpen}
 						/>
 					)}
-					<Typography variant="h1" className="title" gutterBottom>
+					<Typography variant="h2" className="title" gutterBottom>
 						{product.name}
 					</Typography>
 					<Typography variant="h5" className="price">
