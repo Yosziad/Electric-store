@@ -53,7 +53,7 @@ const createProduct = async (req, res) => {
     });
   }
   logger.info('added product successfully', product);
-  return res.send('המוצר נשמר בהצלחה');
+  return res.send('added product successfully');
 };
 
 const getProducts = async (req, res) => {
