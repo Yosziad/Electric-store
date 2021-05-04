@@ -30,10 +30,13 @@ app.use(session({
 mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.set('useCreateIndex', true);
 
-app.use(express.static(path.join(__dirname, '../client/build')))
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/build'))
-})
+if(process.env.ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/build')));
+  app.get('*', (req, res) => {
+      res.sendFile(path.join(__dirname, '../client/build'));
+  })
+}
+
 
 app.use('/product', productRoutes);
 app.use('/order', orderRoutes);
