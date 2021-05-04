@@ -80,7 +80,8 @@ const Login = () => {
 				className="page-container"
 			>
 				<Grid item className="login-container">
-					<Grid item className="image-container" xs={12}>
+					<div>
+						<Grid item className="image-container" xs={12}>
 						<Link to="/">
 							<img className="image-logo" src={loginImg} alt="login" />
 						</Link>
@@ -164,6 +165,8 @@ const Login = () => {
 							<Link to="signup">הרשם כאן</Link>
 						</h5>
 					</Grid>
+					</div>
+					
 				</Grid>
 			</Grid>
 		</>
