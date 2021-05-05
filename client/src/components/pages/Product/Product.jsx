@@ -24,7 +24,7 @@ import EditProductModal from './EditProductModal';
 
 const Product = () => {
 	const [product, setProduct] = useState({});
-	const [quantity, setQuantity] = useState(0);
+	const [quantity, setQuantity] = useState(1);
 	const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
 
@@ -61,7 +61,7 @@ const Product = () => {
 	}, [product.quantity, quantity]);
 
 	const onQuantitySubtract = useCallback(() => {
-		if (quantity > 0) {
+		if (quantity > 1) {
 			setQuantity(quantity - 1);
 		}
 	}, [quantity]);
