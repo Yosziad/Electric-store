@@ -84,7 +84,7 @@ const Cart = () => {
 	useEffect(() => {
 		const totalSum = cartItems.reduce((totalPrice, cartItem) => (
 			totalPrice
-				+ get(cartItem, 'product.price', 0) * get(cartItem, 'quantity', 0)
+			+ get(cartItem, 'product.price', 0) * get(cartItem, 'quantity', 0)
 		), 0);
 		setSum(totalSum);
 	}, [cartItems]);
@@ -124,23 +124,25 @@ const Cart = () => {
 	}, [dispatch]);
 
 	return (
-		<div>
-			{cartItems.length > 0 ? (
-				<div>
-					<Header />
-					<Grid
-						container
-						direction="row"
-						alignItems="flex-start"
-						justify="center"
-						className="cart-page"
-					>
-						<Grid item md={12}>
+		<>
+			<Header fixScroll elevation={0} />
+			<Grid
+				container
+				direction="column"
+				alignItems="center"
+				justify="flex-start"
+				className="cart-page"
+				spacing={10}
+			>
+				{cartItems.length > 0 ? (
+					<>
+						<Grid item>
 							<Typography variant="h1" className="title">
 								העגלה שלך
 							</Typography>
 						</Grid>
 						<Grid
+							item
 							container
 							direction="row"
 							alignItems="flex-start"
@@ -176,9 +178,7 @@ const Cart = () => {
 													<TableCell>{`${cartItem.product.price} ₪`}</TableCell>
 													<TableCell>{cartItem.quantity}</TableCell>
 													<TableCell>
-														{`${
-															cartItem.product.price * cartItem.quantity
-														} ₪`}
+														{`${cartItem.product.price * cartItem.quantity} ₪`}
 													</TableCell>
 													<TableCell>
 														<RemoveProductBtn
@@ -229,27 +229,38 @@ const Cart = () => {
 								</Button>
 							</Grid>
 						</Grid>
+					</>
+				) : (
+					<Grid container direction="column" justify="flex-start" alignItems="center" className="cart-container">
+						<Grid item>
+							<img
+								src="/img/market.svg"
+								alt="empty-cart"
+								className="empty-cart"
+								height="150"
+							/>
+						</Grid>
+						<Grid item>
+							<span className="empty-cart-message">
+								אין פריטים בעגלה שלך. בואו נתחיל קניות!
+								</span>
+						</Grid>
+						<Grid item>
+							<Button
+								onClick={onHome}
+								variant="contained"
+								color="primary"
+								size="large"
+								className="home-btn"
+							>
+								חזרה לדף הבית
+								</Button>
+						</Grid>
 					</Grid>
-				</div>
-			) : (
-				<div className="cart-container">
-					<img
-						src="/img/empty-cart.png"
-						alt="empty-cart"
-						className="empty-cart"
-					/>
-					<Button
-						onClick={onHome}
-						variant="contained"
-						color="secondary"
-						className="home-btn"
-					>
-						לחזרה לדף הבית
-					</Button>
-				</div>
-			)}
+				)}
+			</Grid>
 			<ToastContainer />
-		</div>
+		</>
 	);
 };
 
