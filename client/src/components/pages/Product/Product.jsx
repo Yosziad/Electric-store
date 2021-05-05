@@ -98,7 +98,7 @@ const Product = () => {
 				alignItems="center"
 				justify="center"
 			>
-				<Grid item md={6} className="product-container">
+				<Grid item md={8} className="product-container">
 					{user.role === 'Admin' && (
 						<Button className="edit-btn" title="ערוך מוצר" onClick={handleClickOpen}>
 							<MdModeEdit />
@@ -111,50 +111,45 @@ const Product = () => {
 							isOpen={isEditModalOpen}
 						/>
 					)}
-					<Typography variant="h2" className="title" gutterBottom>
-						{product.name}
-					</Typography>
-					<Typography variant="h5" className="price">
-						{`${get(product, 'price', 0).toFixed(2)}₪`}
-					</Typography>
-					<Typography variant="subtitle1" className="description">
-						{product.description}
-					</Typography>
-					<CardMedia
-						component="img"
-						alt={product.name}
-						image={product.pictureUrl}
-						title={product.name}
-						className="product-img"
-					/>
-					<Grid container direction="row" className="add-to-cart-container">
-						<Typography variant="subtitle1" className="choose-quantity">
-							בחר כמות:
+					<Grid className="text-container">
+						<Typography variant="h2" className="title" gutterBottom>
+							{product.name}
 						</Typography>
-						<div className="space-small" />
-						<Button onClick={onQuantityAdd} className="add-btn">
-							<IoAddCircleSharp />
-						</Button>
-						<Typography variant="h3" className="quantity">
-							{quantity}
+						<Typography variant="h5" className="price">
+							{`${get(product, 'price', 0).toFixed(2)}₪`}
 						</Typography>
-						<Button
-							className="add-btn"
-							onClick={onQuantitySubtract}
-						>
-							<IoRemoveCircleSharp />
-						</Button>
-						<div className="space" />
-					</Grid>
-					<Button
-						variant="contained"
-						className="add-to-cart"
-						onClick={onAddToCart}
-					>
-						הוסף לסל
-						<MdAddShoppingCart className="icon" />
-					</Button>
-					{user.role === 'Admin'
+						<Typography variant="subtitle1" className="description">
+							{product.description}
+						</Typography>
+						<Grid container direction="row" className="add-to-cart-container">
+							<Typography variant="subtitle1" className="choose-quantity">
+								בחר כמות:
+							</Typography>
+							<div className="space-small" />
+							<Button onClick={onQuantityAdd} className="add-btn">
+								<IoAddCircleSharp />
+							</Button>
+							<Typography variant="h3" className="quantity">
+								{quantity}
+							</Typography>
+							<Button
+								className="add-btn"
+								onClick={onQuantitySubtract}
+							>
+								<IoRemoveCircleSharp />
+							</Button>
+							<div className="space-small" />
+						</Grid>
+						<Grid container direction="row" className="btn-container">
+							<Button
+								variant="contained"
+								className="add-to-cart"
+								onClick={onAddToCart}
+							>
+								הוסף לסל
+								<MdAddShoppingCart className="icon" />
+							</Button>
+							{user.role === 'Admin'
 						&& (
 							<Button
 								variant="contained"
@@ -166,6 +161,17 @@ const Product = () => {
 								<MdDelete className="icon" />
 							</Button>
 						)}
+						</Grid>
+					</Grid>
+					<Grid className="picture-container">
+						<CardMedia
+							component="img"
+							alt={product.name}
+							image={product.pictureUrl}
+							title={product.name}
+							className="product-img"
+						/>
+					</Grid>
 				</Grid>
 			</Grid>
 			<ToastContainer />

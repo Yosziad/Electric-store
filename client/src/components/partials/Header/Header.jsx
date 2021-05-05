@@ -39,7 +39,7 @@ const UserProfile = ({ onClick }) => {
 		</IconButton>
 	) : (
 		<IconButton className="loggedin-btn" onClick={onClick}>
-			{`${user.firstName.split('')[0]}${user.lastName.split('')[0]}`}
+			{user.firstName && `${user.firstName.split('')[0]}${user.lastName.split('')[0]}`}
 		</IconButton>
 	);
 };
