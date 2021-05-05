@@ -10,6 +10,8 @@ import Button from '@material-ui/core/Button';
 import signup from '../../../utils/api/user/user';
 import './Signup.scss';
 
+const loginImg = '/img/logo.png';
+
 const userNameValidationRegEx = /^([a-z]|[0-9]|-|_)+$/;
 
 const Signup = () => {
@@ -105,6 +107,11 @@ const Signup = () => {
 			>
 				<Grid item className="signup-container">
 					<div>
+					<Grid item className="image-container" xs={12}>
+						<Link to="/">
+							<img className="image-logo" src={loginImg} alt="login" />
+						</Link>
+					</Grid>
 						<Grid item xs={12} className="signup-title">
 							<h1>בוא נתחיל!</h1>
 						</Grid>
