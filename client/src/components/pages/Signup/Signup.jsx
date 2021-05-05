@@ -104,116 +104,117 @@ const Signup = () => {
 				className="page-container"
 			>
 				<Grid item className="signup-container">
-					<Grid item xs={12} className="signup-title">
-						<h1>בוא נתחיל!</h1>
-					</Grid>
-					<Grid item xs={12} className="signup-form">
-						<TextField
-							id="input-with-icon-textfield"
-							label="שם משתמש"
-							value={username}
-							onChange={onUsernameChange}
-							className="text-field"
-							error={usernameError.length > 0}
-							helperText={usernameError.length > 0 ? usernameError : ' '}
-							InputProps={{
-								startAdornment: (
-									<InputAdornment className="text-field" position="start">
-										<PersonIcon />
-									</InputAdornment>
-								),
-							}}
-						/>
-					</Grid>
-					<Grid item xs={12} className="small-text">
-						<TextField
-							id="input-with-icon-textfield"
-							label="סיסמא"
-							type="password"
-							value={password}
-							onChange={onPasswordChange}
-							className="text-field"
-							error={passwordError.length > 0}
-							helperText={passwordError.length > 0 ? passwordError : ' '}
-							InputProps={{
-								startAdornment: (
-									<InputAdornment className="text-field" position="start">
-										<LockOpenIcon />
-									</InputAdornment>
-								),
-							}}
-						/>
-					</Grid>
-					<Grid item xs={12} className="small-text">
-						<TextField
-							id="input-with-icon-textfield"
-							label="אשר סיסמא"
-							type="password"
-							value={passwordConfirm}
-							onChange={onPasswordChangeAgain}
-							className="text-field"
-							error={passwordConfirmError.length > 0}
-							helperText={
-								passwordConfirmError.length > 0 ? passwordConfirmError : ' '
-							}
-							InputProps={{
-								startAdornment: (
-									<InputAdornment className="text-field" position="start">
-										<LockOpenIcon />
-									</InputAdornment>
-								),
-							}}
-						/>
-					</Grid>
-					<Grid item xs={12} className="small-text">
-						<TextField
-							id="input-with-icon-textfield"
-							label="שם פרטי"
-							value={firstname}
-							onChange={onFirstnameChange}
-							className="text-field"
-							error={firstnameError.length > 0}
-							helperText={firstnameError.length > 0 ? firstnameError : ' '}
-							InputProps={{
-								startAdornment: (
-									<InputAdornment className="text-field" position="start">
-										<PersonIcon />
-									</InputAdornment>
-								),
-							}}
-						/>
-					</Grid>
-					<Grid item xs={12} className="small-text">
-						<TextField
-							id="input-with-icon-textfield"
-							label="שם משפחה"
-							value={lastname}
-							onChange={onLastnameChange}
-							className="text-field"
-							error={lastnameError.length > 0}
-							helperText={lastnameError.length > 0 ? lastnameError : ' '}
-							InputProps={{
-								startAdornment: (
-									<InputAdornment className="text-field" position="start">
-										<PersonIcon />
-									</InputAdornment>
-								),
-							}}
-						/>
-					</Grid>
-					<Grid item xs={12} className="signup-form">
-						<Button variant="contained" type="submit" onClick={onSubmit}>
-							הרשם
-						</Button>
-					</Grid>
-
-					<Grid item xs={12} className="signup-link">
-						<h5>
-							יש לך כבר משתמש
-							?
-							<Link to="login">התחבר כאן</Link>
-						</h5>
-					</Grid>
+					<div>
+						<Grid item xs={12} className="signup-title">
+							<h1>בוא נתחיל!</h1>
+						</Grid>
+						<Grid item xs={12} className="signup-form">
+							<TextField
+								id="input-with-icon-textfield"
+								label="שם משתמש"
+								value={username}
+								onChange={onUsernameChange}
+								className="text-field"
+								error={usernameError.length > 0}
+								helperText={usernameError.length > 0 ? usernameError : ' '}
+								InputProps={{
+									startAdornment: (
+										<InputAdornment className="text-field" position="start">
+											<PersonIcon />
+										</InputAdornment>
+									),
+								}}
+							/>
+						</Grid>
+						<Grid item xs={12} className="small-text">
+							<TextField
+								id="input-with-icon-textfield"
+								label="סיסמא"
+								type="password"
+								value={password}
+								onChange={onPasswordChange}
+								className="text-field"
+								error={passwordError.length > 0}
+								helperText={passwordError.length > 0 ? passwordError : ' '}
+								InputProps={{
+									startAdornment: (
+										<InputAdornment className="text-field" position="start">
+											<LockOpenIcon />
+										</InputAdornment>
+									),
+								}}
+							/>
+						</Grid>
+						<Grid item xs={12} className="small-text">
+							<TextField
+								id="input-with-icon-textfield"
+								label="אשר סיסמא"
+								type="password"
+								value={passwordConfirm}
+								onChange={onPasswordChangeAgain}
+								className="text-field"
+								error={passwordConfirmError.length > 0}
+								helperText={
+									passwordConfirmError.length > 0 ? passwordConfirmError : ' '
+								}
+								InputProps={{
+									startAdornment: (
+										<InputAdornment className="text-field" position="start">
+											<LockOpenIcon />
+										</InputAdornment>
+									),
+								}}
+							/>
+						</Grid>
+						<Grid item xs={12} className="small-text">
+							<TextField
+								id="input-with-icon-textfield"
+								label="שם פרטי"
+								value={firstname}
+								onChange={onFirstnameChange}
+								className="text-field"
+								error={firstnameError.length > 0}
+								helperText={firstnameError.length > 0 ? firstnameError : ' '}
+								InputProps={{
+									startAdornment: (
+										<InputAdornment className="text-field" position="start">
+											<PersonIcon />
+										</InputAdornment>
+									),
+								}}
+							/>
+						</Grid>
+						<Grid item xs={12} className="small-text">
+							<TextField
+								id="input-with-icon-textfield"
+								label="שם משפחה"
+								value={lastname}
+								onChange={onLastnameChange}
+								className="text-field"
+								error={lastnameError.length > 0}
+								helperText={lastnameError.length > 0 ? lastnameError : ' '}
+								InputProps={{
+									startAdornment: (
+										<InputAdornment className="text-field" position="start">
+											<PersonIcon />
+										</InputAdornment>
+									),
+								}}
+							/>
+						</Grid>
+						<Grid item xs={12} className="signup-form">
+							<Button variant="contained" type="submit" onClick={onSubmit}>
+								הרשם
+							</Button>
+						</Grid>
+						<Grid item xs={12} className="signup-link">
+							<h5>
+								יש לך כבר משתמש
+								?
+								<Link to="login">התחבר כאן</Link>
+							</h5>
+						</Grid>
+					</div>
 				</Grid>
 			</Grid>
 		</>
