@@ -2,32 +2,46 @@
 @import "../../../styles/colors.scss";
 
 .product-page {
-	background-color: $blue-join-button;
+	background-color: $white-grey;
 	height: calc(100 - 100px);
-	padding: 70px 40px 70px;
+	padding: 200px 40px 70px;
 	.product-container {
 		position: relative;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		height: 100%;
+		box-shadow: 0px 0px 12px 2px rgba(15, 15, 15, 0.2);
+  	background-color: white;
+		.text-container{
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+		}
+		.picture-container{
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			width: 450px;
+			height: 500px;
+		}
 		.edit-btn{
 			position: absolute;
+			top: 10px;
 			right: 10px;
 			font-size: 3rem;
 			background-color: $red-google;
 			color: white;
 			border-radius: 50px;
 		}
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		.product-img{
-			width: 40%;
-		}
 		.price {
-			color: white;
+			color: black;
 			margin-top: 0;
 			padding-left: 5px;
 		}
 		.title {
-			color: white;
+			color: black;
 			margin-bottom: 0;
 			@media only screen and (max-width: $sm) {
 				font-size: 5rem;
@@ -36,20 +50,20 @@
 		.description {
 			margin-top: 50px;
 			width: 50%;
-			color: $white-grey;
+			color: black;
 		}
 		.add-to-cart-container {
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			color: $white-grey;
-			margin-top: 3%;
+			color: black;
+			margin-top: 10%;
 			margin-bottom: 3%;
 			.add-btn {
 				min-width: 30px;
 				height: 50%;
-				border-color: $white-grey;
-				color: $white-grey;
+				border-color: black;
+				color: black;
 				font-size: 1.7rem;
 				@media only screen and (max-width: $sm) {
 					font-size: 1rem;
@@ -67,29 +81,34 @@
 					}
 				}
 				.MuiInputBase-input {
-					color: $white-grey;
+					color: black;
 				}
 				.MuiOutlinedInput-notchedOutline {
-					border-color: $white-grey;
+					border-color: black;
 				}
 			}
 		}
-		.add-to-cart {
-			margin-top: 20px;
-			width: 50%;
-			.icon{
-				font-size: large;
-				margin-right: 5px;
-			}
-			.choose-quantity{
-				@media only screen and (max-width: $sm) {
-					font-size: 0.8rem;
+		.btn-container{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			.add-to-cart {
+				margin-top: 20px;
+				width: 90%;
+				.icon{
+					font-size: large;
+					margin-right: 5px;
+				}
+				.choose-quantity{
+					@media only screen and (max-width: $sm) {
+						font-size: 0.8rem;
+					}
 				}
 			}
 		}
 		.delete-btn{
 			margin-top: 20px;
-			width: 50%;
+			width: 90%;
 			.icon{
 				font-size: large;
 				margin-right: 5px;
@@ -142,7 +161,7 @@
     }
     .login-btn{
       background-color: $button-purple;
-      color:white;
+      color:black;
       width:20%;
       height:15%;
     }
