@@ -1,37 +1,44 @@
-@import '../../../styles/config.scss';
-@import '../../../styles/colors.scss';
+@import "../../../styles/config.scss";
+@import "../../../styles/colors.scss";
 
 .page-container {
   height: 100%;
-  &.MuiGrid-spacing-xs-3{
+  &.MuiGrid-spacing-xs-3 {
     width: 100%;
     margin: 0px;
   }
   .signup-container {
     display: flex;
     flex-direction: column;
-  @media only screen and (max-width: $md) {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border: none;
-  }
+    background-color: white;
+    border-radius: 30px;
+    border: 1px solid #ddd;
 
-  background-color: white;
-  border-radius: 30px;
-  border: 1px solid #DDD;
-  
-  &.MuiGrid-item {
-    @media only screen and (min-width: $md) {
-      padding: 50px 150px;
-    }
     @media only screen and (max-width: $md) {
-      margin-top: 0px;
-      border-radius: 0px;
-      padding-top: 25px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border: none;
     }
+
+    .image-container {
+      text-align: center;
+      .image-logo {
+        height: 200px;
+      }
+    }
+
+    &.MuiGrid-item {
+      @media only screen and (min-width: $md) {
+        padding: 50px 150px;
+      }
+      @media only screen and (max-width: $md) {
+        margin-top: 0px;
+        border-radius: 0px;
+        padding-top: 25px;
+      }
     }
     .signup-title {
       text-align: center;
@@ -40,14 +47,14 @@
       color: $text-field-blue;
     }
     .small-link {
-			text-align: end;
-			margin-top: 10px;
-			padding-left: 27%;
-			font-size: 50%;
+      text-align: end;
+      margin-top: 10px;
+      padding-left: 27%;
+      font-size: 50%;
     }
     .submit-button {
       background-color: $button-purple;
-      color: white; 
+      color: white;
       width: 100px;
       border-radius: 40px;
     }
@@ -67,7 +74,7 @@
       }
     }
     .left-button {
-      text-align: start; 
+      text-align: start;
       margin-top: 2px;
       Button {
         background-color: $red-google;
@@ -89,7 +96,7 @@
       button {
         background-color: $button-purple;
         color: white;
-        width: 100px; 
+        width: 100px;
         border-radius: 40px;
       }
     }
