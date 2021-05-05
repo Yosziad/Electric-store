@@ -56,7 +56,8 @@ const Login = () => {
 		}
 	}, [loginWithThirdParty]);
 
-	const onSubmit = useCallback(async () => {
+	const onSubmit = useCallback(async (event) => {
+		event.preventDefault();
 		setError('');
 		const currentUser = await login(username, password);
 		dispatch(currentUserAction(currentUser));
@@ -66,6 +67,7 @@ const Login = () => {
 		} else {
 			setError('שם משתמש או סיסמא שגויים');
 		}
+		return false;
 	}, [dispatch, history, password, username]);
 
 	return (
@@ -79,6 +81,7 @@ const Login = () => {
 				spacing={3}
 				className="page-container"
 			>
+				<form noValidate autoComplete="off">
 				<Grid item className="login-container">
 					<div>
 						<Grid item className="image-container" xs={12}>
@@ -168,6 +171,7 @@ const Login = () => {
 					</div>
 					
 				</Grid>
+				</form>
 			</Grid>
 		</>
 	);

@@ -48,7 +48,7 @@ UserProfile.propTypes = {
 	onClick: PropTypes.func.isRequired,
 };
 
-const Header = () => {
+const Header = ({fixScroll, elevation}) => {
 	const [userMenuAnchorEl, setUserMenuAnchorEl] = useState(null);
 	const [token, setToken] = useState(false);
 
@@ -156,7 +156,7 @@ const Header = () => {
 		</Popover>
 	);
 
-	const [didScroll, setDidScroll] = useState(false);
+	const [didScroll, setDidScroll] = useState(fixScroll);
 
 	const handleScroll = useCallback(() => {
 		if (window.scrollY > 20) {
@@ -167,18 +167,21 @@ const Header = () => {
 	}, []);
 
 	useEffect(() => {
-		window.addEventListener('scroll', handleScroll);
-		return () => {
-			window.removeEventListener('scroll', handleScroll);
-		};
-	}, [handleScroll]);
+		if (!fixScroll) {
+			window.addEventListener('scroll', handleScroll);
+			return () => {
+				window.removeEventListener('scroll', handleScroll);
+			};
+		}
+		
+	}, [handleScroll, fixScroll]);
 
 	return (
 		<div className="header-container">
 			<AppBar
 				className={didScroll ? 'appbar-style scrolled-down' : 'appbar-style'}
 				position="fixed"
-				elevation={didScroll ? 4 : 0}
+				elevation={didScroll ? elevation : 0}
 			>
 				<Toolbar>
 					<Button size="medium" onClick={onHome}>
@@ -208,5 +211,16 @@ const Header = () => {
 		</div>
 	);
 };
+
+Header.defaultProps = {
+	fixScroll: false,
+	elevation: 4,
+};
+
+Header.propTypes = {
+	fixScroll: PropTypes.bool,
+	elevation: PropTypes.number,
+};
+
 
 export default Header;
