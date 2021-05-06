@@ -90,15 +90,10 @@ const Product = () => {
 	}, []);
 
 	return (
-		<div className="product-page">
+		<>
 			<Header />
-			<Grid
-				container
-				direction="row"
-				alignItems="center"
-				justify="center"
-			>
-				<Grid item md={8} className="product-container">
+			<div className="product-page">
+				<Grid container className="product-container">
 					{user.role === 'Admin' && (
 						<Button className="edit-btn" title="ערוך מוצר" onClick={handleClickOpen}>
 							<MdModeEdit />
@@ -111,7 +106,7 @@ const Product = () => {
 							isOpen={isEditModalOpen}
 						/>
 					)}
-					<Grid className="text-container">
+					<Grid item md={7} xs={12} className="text-container">
 						<Typography variant="h2" className="title" gutterBottom>
 							{product.name}
 						</Typography>
@@ -163,7 +158,7 @@ const Product = () => {
 						)}
 						</Grid>
 					</Grid>
-					<Grid className="picture-container">
+					<Grid item md={5} xs={12} className="picture-container">
 						<CardMedia
 							component="img"
 							alt={product.name}
@@ -173,9 +168,9 @@ const Product = () => {
 						/>
 					</Grid>
 				</Grid>
-			</Grid>
-			<ToastContainer />
-		</div>
+				<ToastContainer />
+			</div>
+		</>
 	);
 };
 

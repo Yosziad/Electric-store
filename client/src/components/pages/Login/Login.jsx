@@ -81,97 +81,94 @@ const Login = () => {
 				spacing={3}
 				className="page-container"
 			>
-				<form noValidate autoComplete="off">
 				<Grid item className="login-container">
-					<div>
+					<form noValidate autoComplete="off" className="form-container">
 						<Grid item className="image-container" xs={12}>
-						<Link to="/">
-							<img className="image-logo" src={loginImg} alt="login" />
-						</Link>
-					</Grid>
-					<Grid item xs={12} className="login-title">
-						<h1>ברוכים הבאים!</h1>
-					</Grid>
-					<Grid item xs={12} className="login-form">
-						<TextField
-							id="input-with-icon-textfield"
-							label="שם משתמש"
-							className="text-field"
-							value={username}
-							onChange={onUsernameChange}
-							InputProps={{
-								startAdornment: (
-									<InputAdornment className="text-field" position="start">
-										<Person />
-									</InputAdornment>
-								),
-							}}
-						/>
-					</Grid>
-					<Grid item xs={12} className="login-form">
-						<TextField
-							label="סיסמא"
-							className="text-field"
-							type="password"
-							value={password}
-							onChange={onPasswordChange}
-							error={error.length > 0}
-							helperText={error.length > 0 ? error : ' '}
-							InputProps={{
-								startAdornment: (
-									<InputAdornment className="text-field" position="start">
-										<LockOpen />
-									</InputAdornment>
-								),
-							}}
-						/>
-					</Grid>
-					<Grid item xs={12} className="small-link" />
-					<Grid item xs={12} className="login-form">
-						<Button
-							className="submit-button"
-							variant="contained"
-							type="submit"
-							onClick={onSubmit}
-						>
-							התחבר
-						</Button>
-					</Grid>
-					<Grid item xs={12} className="small-text">
-						<h5>או התחבר באמצעות</h5>
-					</Grid>
-					<Grid container spacing={3} className="button-container">
-						<Grid item xs={6} className="left-button">
-							<GoogleLogin
-								clientId={process.env.REACT_APP_GOOGLE_API_KEY}
-								render={(renderProps) => (
-									<Button
-										variant="contained"
-										startIcon={<FaGoogle />}
-										onClick={renderProps.onClick}
-										disabled={renderProps.disabled}
-									>
-										גוגל
-									</Button>
-								)}
-								buttonText="Login"
-								onSuccess={responseGoogle}
-								onFailure={responseGoogle}
-								cookiePolicy="single_host_origin"
+							<Link to="/">
+								<img className="image-logo" src={loginImg} alt="login" />
+							</Link>
+						</Grid>
+						<Grid item xs={12} className="login-title">
+							<h1>ברוכים הבאים!</h1>
+						</Grid>
+						<Grid item xs={12} className="login-form">
+							<TextField
+								id="input-with-icon-textfield"
+								label="שם משתמש"
+								className="text-field"
+								value={username}
+								onChange={onUsernameChange}
+								InputProps={{
+									startAdornment: (
+										<InputAdornment className="text-field" position="start">
+											<Person />
+										</InputAdornment>
+									),
+								}}
 							/>
 						</Grid>
-					</Grid>
-					<Grid item xs={12} className="signup-link">
-						<h5>
-							אין לך משתמש
-							?
-							<Link to="signup">הרשם כאן</Link>
-						</h5>
-					</Grid>
-					</div>
-					
+						<Grid item xs={12} className="login-form">
+							<TextField
+								label="סיסמא"
+								className="text-field"
+								type="password"
+								value={password}
+								onChange={onPasswordChange}
+								error={error.length > 0}
+								helperText={error.length > 0 ? error : ' '}
+								InputProps={{
+									startAdornment: (
+										<InputAdornment className="text-field" position="start">
+											<LockOpen />
+										</InputAdornment>
+									),
+								}}
+							/>
+						</Grid>
+						<Grid item xs={12} className="small-link" />
+						<Grid item xs={12} className="login-form">
+							<Button
+								className="submit-button"
+								variant="contained"
+								type="submit"
+								onClick={onSubmit}
+							>
+								התחבר
+							</Button>
+						</Grid>
+						<Grid item xs={12} className="small-text">
+							<h5>או התחבר באמצעות</h5>
+						</Grid>
+						<Grid container spacing={3} className="button-container">
+							<Grid item xs={6} className="left-button">
+								<GoogleLogin
+									clientId={process.env.REACT_APP_GOOGLE_API_KEY}
+									render={(renderProps) => (
+										<Button
+											variant="contained"
+											startIcon={<FaGoogle />}
+											onClick={renderProps.onClick}
+											disabled={renderProps.disabled}
+										>
+											גוגל
+										</Button>
+									)}
+									buttonText="Login"
+									onSuccess={responseGoogle}
+									onFailure={responseGoogle}
+									cookiePolicy="single_host_origin"
+								/>
+							</Grid>
+						</Grid>
+						<Grid item xs={12} className="signup-link">
+							<h5>
+								אין לך משתמש
+								?
+								<Link to="signup">הרשם כאן</Link>
+							</h5>
+						</Grid>
+					</form>
 				</Grid>
-				</form>
 			</Grid>
 		</>
 	);
