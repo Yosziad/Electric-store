@@ -3,17 +3,34 @@
 
 .product-page {
 	background-color: $white-grey;
-	height: calc(100 - 100px);
-	padding: 200px 40px 70px;
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
 	.product-container {
 		position: relative;
 		display: flex;
 		flex-direction: row;
 		align-items: center;
 		justify-content: space-between;
-		height: 100%;
+		width: 70%;
+		padding: 70px;
 		box-shadow: 0px 0px 12px 2px rgba(15, 15, 15, 0.2);
   	background-color: white;
+		@media only screen and (max-width: $md) {
+			flex-direction: column-reverse;
+			justify-content: center;
+		}
+		@media only screen and (max-width: $sm) {
+			padding: 20px;
+		}
+		@media only screen and (max-width: 400px) {
+			padding: 30px 70px 20px;
+			margin-top: 20px;
+			box-shadow: none;
+			width: 100%;
+		}
 		.text-container{
 			display: flex;
 			flex-direction: column;
@@ -23,7 +40,6 @@
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
-			width: 450px;
 			height: 500px;
 		}
 		.edit-btn{
@@ -44,7 +60,10 @@
 			color: black;
 			margin-bottom: 0;
 			@media only screen and (max-width: $sm) {
-				font-size: 5rem;
+				font-size: 4rem;
+			}
+			@media only screen and (max-width: 400px) {
+				font-size: 2rem;
 			}
 		}
 		.description {
