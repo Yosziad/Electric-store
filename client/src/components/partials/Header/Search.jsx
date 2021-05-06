@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, {
 	useCallback, useEffect, useState, useRef, useMemo,
 } from 'react';
@@ -17,6 +18,7 @@ const Search = () => {
 	const [query, setQuery] = useState('');
 	const [products, setProducts] = useState([]);
 	const [display, setDisplay] = useState(false);
+	const [loading, setLoading] = useState(false);
 
 	const history = useHistory();
 
@@ -30,11 +32,13 @@ const Search = () => {
 			}
 		};
 		getProducts();
+		setLoading(false);
 	}, []);
 
 	const delayedOnSearch = useMemo(() => debounce(onSearch, 800), [onSearch]);
 
 	const onQueryChange = useCallback((event) => {
+		setLoading(true);
 		setProducts([]);
 		setDisplay(true);
 		setQuery(event.target.value);
@@ -79,19 +83,21 @@ const Search = () => {
 			</div>
 			{display && (
 				<div className="autoContainer">
-					{products.length === 0
+					{loading
 						? (
 							<Loader type="ball-pulse" color="rgb(114, 193, 244)" className="loader-active" />
 						)
-						:	products.map((product) => (
-							<div ref={wrapperRef}>
-								<Button className="product" onClick={() => onProduct(product._id, product.views)}>
-									<img src={product.pictureUrl} alt={product.name} className="product-img" />
-									<span>{product.name}</span>
-								</Button>
-								<Divider />
-							</div>
-						))}
+						:	products.length === 0
+							? <p>לא נמצאו תוצאות</p>
+							: products.map((product) => (
+								<div ref={wrapperRef}>
+									<Button className="product" onClick={() => onProduct(product._id, product.views)}>
+										<img src={product.pictureUrl} alt={product.name} className="product-img" />
+										<span>{product.name}</span>
+									</Button>
+									<Divider />
+								</div>
+							))}
 				</div>
 			)}
 		</div>
