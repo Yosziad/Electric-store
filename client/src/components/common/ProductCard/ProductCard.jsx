@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
-	Card, CardActionArea, CardActions, CardContent, CardMedia, Button, Typography,
+	Card, CardActionArea, CardContent, CardMedia, Typography,
 } from '@material-ui/core';
 import { viewsUpdate } from '../../../utils/api/product/product';
 import './ProductCard.scss';
@@ -23,24 +23,37 @@ const ProductCard = ({
 				<CardMedia
 					component="img"
 					alt={alt}
-					height="140"
+					height="220"
+					width="220"
 					image={img}
 					title={alt}
 				/>
 				<CardContent className="card-content">
-					<Typography gutterBottom variant="h5" component="h2">
-						{title}
-					</Typography>
-					<Typography variant="body2" color="textSecondary" component="p">
-						{`₪${price}`}
-					</Typography>
+					<div className="item-title-container">
+						<Typography className="item-title" component="span">
+							{title}
+						</Typography>
+					</div>
+
+					<div className="item-price-container">
+						<Typography className="item-price" component="span">
+							{`₪${price}`}
+						</Typography>
+					</div>
+
+					<div className="item-shipping-container">
+						<Typography className="item-shipping" component="span">
+							+ משלוח: ₪15
+						</Typography>
+					</div>
+
+					<div className="item-sold-container">
+						<Typography className="item-sold" component="span">
+							נמכרו 123
+						</Typography>
+					</div>
 				</CardContent>
 			</CardActionArea>
-			<CardActions className="card-actions">
-				<Button size="small" variant="contained" color="primary">
-					הוסף לסל
-				</Button>
-			</CardActions>
 		</Card>
 	);
 };
