@@ -60,7 +60,7 @@ const Categories = () => {
 			<CategoryTitle title={category} />
 			<Grid container className="grid-container" spacing={2}>
 				{products.map((product) => (
-					<Grid className="card-container" key={product._id} item xs={12} lg={2} md={4} sm={5}>
+					<Grid className="card-container" key={product._id} item xs={6} sm={4} md={4} lg={2}>
 						<ProductCard
 							productId={product._id}
 							img={product.pictureUrl}
