@@ -4,8 +4,11 @@ import React, {
 	useCallback,
 } from 'react';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+import moment from 'moment';
+import 'moment/locale/he';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router';
 import get from 'lodash/get';
@@ -13,14 +16,18 @@ import {
 	Typography,
 	CardMedia,
 } from '@material-ui/core';
-import { IoAddCircleSharp, IoRemoveCircleSharp } from 'react-icons/io5';
-import { MdDelete, MdAddShoppingCart, MdModeEdit } from 'react-icons/md';
+import IconButton from '@material-ui/core/IconButton';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
+import { MdDelete, MdModeEdit } from 'react-icons/md';
 import { ToastContainer, toast } from 'react-toastify';
 import { getProductById, deleteProduct } from '../../../utils/api/product/product';
 import './Product.scss';
 import cartAction from '../../../store/actions/cartAction';
 import Header from '../../partials/Header/Header';
 import EditProductModal from './EditProductModal';
+
+moment.locale('he');
 
 const Product = () => {
 	const [product, setProduct] = useState({});
@@ -91,7 +98,7 @@ const Product = () => {
 
 	return (
 		<>
-			<Header />
+			<Header fixScroll elevation={0} />
 			<div className="product-page">
 				<Grid container className="product-container">
 					{user.role === 'Admin' && (
@@ -99,65 +106,6 @@ const Product = () => {
 							<MdModeEdit />
 						</Button>
 					)}
-					{!isLoading && (
-						<EditProductModal
-							product={product}
-							onClose={handleEditClose}
-							isOpen={isEditModalOpen}
-						/>
-					)}
-					<Grid item md={7} xs={12} className="text-container">
-						<Typography variant="h2" className="title" gutterBottom>
-							{product.name}
-						</Typography>
-						<Typography variant="h5" className="price">
-							{`${get(product, 'price', 0).toFixed(2)}₪`}
-						</Typography>
-						<Typography variant="subtitle1" className="description">
-							{product.description}
-						</Typography>
-						<Grid container direction="row" className="add-to-cart-container">
-							<Typography variant="subtitle1" className="choose-quantity">
-								בחר כמות:
-							</Typography>
-							<div className="space-small" />
-							<Button onClick={onQuantityAdd} className="add-btn">
-								<IoAddCircleSharp />
-							</Button>
-							<Typography variant="h3" className="quantity">
-								{quantity}
-							</Typography>
-							<Button
-								className="add-btn"
-								onClick={onQuantitySubtract}
-							>
-								<IoRemoveCircleSharp />
-							</Button>
-							<div className="space-small" />
-						</Grid>
-						<Grid container direction="row" className="btn-container">
-							<Button
-								variant="contained"
-								className="add-to-cart"
-								onClick={onAddToCart}
-							>
-								הוסף לסל
-								<MdAddShoppingCart className="icon" />
-							</Button>
-							{user.role === 'Admin'
-						&& (
-							<Button
-								variant="contained"
-								className="delete-btn"
-								color="secondary"
-								onClick={onDeleteProduct}
-							>
-								מחק מוצר
-								<MdDelete className="icon" />
-							</Button>
-						)}
-						</Grid>
-					</Grid>
 					<Grid item md={5} xs={12} className="picture-container">
 						<CardMedia
 							component="img"
@@ -167,9 +115,87 @@ const Product = () => {
 							className="product-img"
 						/>
 					</Grid>
+					<Grid item md={7} xs={12} className="text-container">
+						<Typography variant="h1" className="title" gutterBottom>
+							{product.name}
+						</Typography>
+						<Typography variant="body1" component="span" className="orders">
+							123 הזמנות
+						</Typography>
+						<Divider className="divider" />
+						<Typography variant="h5" className="price">
+							{`${get(product, 'price', 0).toFixed(2)}₪`}
+						</Typography>
+						<Divider className="divider" />
+						<Typography variant="subtitle1" className="description">
+							{product.description}
+						</Typography>
+						<div className="quantity-container">
+							<Typography variant="subtitle1" className="quantity-text">
+								בחר כמות:
+							</Typography>
+							<div className="quantity-amount-container">
+								<div className="quantity-selector">
+									<IconButton color="default" onClick={onQuantitySubtract} className="quantity-btn" aria-label="add item" disabled={quantity <= 1}>
+										<RemoveCircleIcon />
+									</IconButton>
+									<Typography variant="h3" className="quantity">
+										{quantity}
+									</Typography>
+									<IconButton color="default" onClick={onQuantityAdd} className="quantity-btn" aria-label="remove item" disabled={quantity >= product.quantity}>
+										<AddCircleIcon />
+									</IconButton>
+								</div>
+								<div className="quantity-amount">
+									{`נותרו ${product.quantity} מוצרים`}
+								</div>
+							</div>
+						</div>
+						<div className="product-shipping">
+							<div className="product-shipping-price">
+								<span>משלוח: 15₪</span>
+							</div>
+							<span className="product-shipping-date">
+								<span className="product-shipping-delivery">
+									תאריך משואר למשלוח&nbsp;
+									<span>{moment().add(1, 'week').format('MMMM, DD')}</span>
+								</span>
+							</span>
+						</div>
+						<div className="product-action">
+							<Button
+								color="primary"
+								variant="contained"
+								className="add-to-cart"
+								onClick={onAddToCart}
+							>
+								הוסף לסל
+							</Button>
+							{user.role === 'Admin'
+									&& (
+										<Button
+											variant="contained"
+											className="delete-btn"
+											color="secondary"
+											onClick={onDeleteProduct}
+										>
+											מחק מוצר
+											<MdDelete className="icon" />
+										</Button>
+									)}
+						</div>
+						<Grid container direction="row" className="btn-container" />
+					</Grid>
 				</Grid>
-				<ToastContainer />
 			</div>
+			{!isLoading && (
+				<EditProductModal
+					product={product}
+					onClose={handleEditClose}
+					isOpen={isEditModalOpen}
+				/>
+			)}
+			<ToastContainer />
 		</>
 	);
 };
